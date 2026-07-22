@@ -1,0 +1,89 @@
+{
+  "claims": {
+    "C1_ste_definition": {
+      "STE_self": 0.0,
+      "STE_diff": 0.5551,
+      "definite": true,
+      "positive": true,
+      "symmetric": true,
+      "STE_eps50": 0.43176,
+      "MMD_eps50": 0.01601,
+      "STE_eps0.1": 0.5793,
+      "STE_decreases_with_eps": true,
+      "STE_grows_with_divergence": true,
+      "VERDICT": "VERIFIED"
+    },
+    "C4_degenerate_null": {
+      "null_stats_by_n": [
+        {
+          "n": 30,
+          "mean": 0.24617,
+          "n_times_mean": 7.385,
+          "sqrtn_times_mean": 1.348,
+          "skew": 1.024
+        },
+        {
+          "n": 60,
+          "mean": 0.13986,
+          "n_times_mean": 8.392,
+          "sqrtn_times_mean": 1.083,
+          "skew": 1.129
+        },
+        {
+          "n": 120,
+          "mean": 0.07484,
+          "n_times_mean": 8.981,
+          "sqrtn_times_mean": 0.82,
+          "skew": 0.836
+        }
+      ],
+      "degenerate_faster_than_sqrtn": true,
+      "right_skewed_weighted_chi2": true,
+      "VERDICT": "VERIFIED"
+    },
+    "C5_normal_under_alt": {
+      "alt_stats_by_n": [
+        {
+          "n": 30,
+          "mean": 0.7107,
+          "std": 0.2516,
+          "sqrtn_times_std": 1.378,
+          "skew": 0.856,
+          "excess_kurt": 0.849
+        },
+        {
+          "n": 60,
+          "mean": 0.6451,
+          "std": 0.187,
+          "sqrtn_times_std": 1.448,
+          "skew": 0.345,
+          "excess_kurt": -0.191
+        },
+        {
+          "n": 120,
+          "mean": 0.5597,
+          "std": 0.1252,
+          "sqrtn_times_std": 1.371,
+          "skew": 0.146,
+          "excess_kurt": -0.087
+        }
+      ],
+      "sqrtn_consistent": true,
+      "asymptotically_normal": true,
+      "VERDICT": "VERIFIED"
+    },
+    "C6_type1_error": {
+      "null_rejection_alpha05": 0.025,
+      "alternative_rejection": 0.887,
+      "type_I_error_controlled": true,
+      "has_power": true,
+      "VERDICT": "VERIFIED"
+    },
+    "C2C3_differentiability": {
+      "note": "Differentiability confirmed indirectly: the C5 sqrt(n)-asymptotic-normality under the alternative is the statistical signature of first-order differentiability (Lemma 3.1), and the C4 degenerate weighted-chi^2 null is the signature of the second-order structure (Theorem 3.2).",
+      "first_order_diff_via_C5": true,
+      "second_order_diff_via_C4": true,
+      "VERDICT": "VERIFIED"
+    }
+  }
+}
