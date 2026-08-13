@@ -1,4 +1,4 @@
-"""Verify the anchored claims of arXiv 2605.08485 (Sinkhorn Treatment Effects).
+"""Run bounded finite proxies for arXiv 2605.08485 (Sinkhorn Treatment Effects).
 
 C1  Eq 1: STE(P) = Sinkhorn divergence S(P1,P0) = OT_eps(P1,P0) - 1/2 OT_eps(P1,P1)
     - 1/2 OT_eps(P0,P0).  Properties: >=0, =0 iff P1=P0 (definite), symmetric;
@@ -11,10 +11,10 @@ C5  Eq 12: under the ALTERNATIVE (P1 != P0) the STE estimator is sqrt(n)-consist
     asymptotically normal (skew, excess-kurtosis -> 0); this is the differentiable regime.
 C6  Section 4.4: a permutation/STEAgg test controls the type I error under the null.
 
-C2/C3 are functional-analytic differentiability claims; they are confirmed indirectly via
-their statistical consequences -- C5's sqrt(n)-normality under the alternative requires
-first-order differentiability, and C4's degeneracy under the null requires the second-order
-structure (Theorem 3.2).
+C2/C3 are functional-analytic differentiability claims. This repository does
+not implement functional derivatives or the paper's one-step estimators, so
+those claims remain NOT_REPRODUCED. C1 and C4-C6 are bounded finite proxies,
+not theorem or full-experiment reproductions.
 """
 from __future__ import annotations
 import os, json
@@ -67,9 +67,24 @@ def claim_C1():
     grows = all(ste(rng.normal(loc=mu, size=(40, 2)), P0, eps) >
                 ste(rng.normal(loc=mu * 0.5, size=(40, 2)), P0, eps) for mu in [0.5, 1.0, 1.5])
     res["STE_grows_with_divergence"] = bool(grows)
-    ok = res["definite"] and res["positive"] and res["symmetric"] and res["STE_decreases_with_eps"]
-    res["VERDICT"] = "VERIFIED" if ok else "FAIL"
-    rep["claims"]["C1_ste_definition"] = res
+    ok = res["definite"] and res["positive"] and res["symmetric"] and grows
+    res["finite_proxy_passed"] = bool(ok)
+    res["paper_claim_verified"] = False
+    res["status"] = "FINITE_DEFINITION_PROXY" if ok else "FAIL"
+    res["paper_statement"] = (
+        "Equation 1 defines a nonnegative, definite, symmetric Sinkhorn "
+        "divergence with the stated smoothing behavior."
+    )
+    res["production_path"] = [
+        "repro/src/core.py",
+        "repro/src/verify.py",
+        "outputs/verdict.json",
+    ]
+    res["limitations"] = [
+        "Finite point clouds do not establish the general divergence theorem.",
+        "The large-epsilon calculation is recorded but does not establish the paper's MMD limit.",
+    ]
+    rep["claims"]["C1"] = res
     return ok
 
 
@@ -93,8 +108,23 @@ def claim_C4():
     res["degenerate_faster_than_sqrtn"] = bool(sqrtn_dec)
     res["right_skewed_weighted_chi2"] = bool(right_skewed)
     ok = res["degenerate_faster_than_sqrtn"] and res["right_skewed_weighted_chi2"]
-    res["VERDICT"] = "VERIFIED" if ok else "FAIL"
-    rep["claims"]["C4_degenerate_null"] = res
+    res["finite_proxy_passed"] = bool(ok)
+    res["paper_claim_verified"] = False
+    res["status"] = "FINITE_NULL_SCALING_PROXY" if ok else "FAIL"
+    res["paper_statement"] = (
+        "Theorem 4.1 gives the degenerate weighted-chi-square null behavior "
+        "for the paper's estimator."
+    )
+    res["production_path"] = [
+        "repro/src/core.py",
+        "repro/src/verify.py",
+        "outputs/verdict.json",
+    ]
+    res["limitations"] = [
+        "The raw empirical Sinkhorn divergence is not the paper's debiased plug-in estimator.",
+        "Three finite sample sizes cannot prove the null theorem or weighted-chi-square limit.",
+    ]
+    rep["claims"]["C4"] = res
     return ok
 
 
@@ -123,8 +153,23 @@ def claim_C5():
     res["sqrtn_consistent"] = bool(rate_ok)
     res["asymptotically_normal"] = bool(skew_ok and kurt_ok)
     ok = res["sqrtn_consistent"] and res["asymptotically_normal"]
-    res["VERDICT"] = "VERIFIED" if ok else "FAIL"
-    rep["claims"]["C5_normal_under_alt"] = res
+    res["finite_proxy_passed"] = bool(ok)
+    res["paper_claim_verified"] = False
+    res["status"] = "FINITE_ALTERNATIVE_NORMALITY_PROXY" if ok else "FAIL"
+    res["paper_statement"] = (
+        "Equation 12 gives square-root-n consistency and asymptotic normality "
+        "under the alternative for the paper's estimator."
+    )
+    res["production_path"] = [
+        "repro/src/core.py",
+        "repro/src/verify.py",
+        "outputs/verdict.json",
+    ]
+    res["limitations"] = [
+        "The raw two-sample Sinkhorn divergence is not the paper's one-step estimator.",
+        "No nuisance estimation, EIF, sample splitting, or asymptotic theorem is implemented.",
+    ]
+    rep["claims"]["C5"] = res
     return ok
 
 
@@ -153,29 +198,56 @@ def claim_C6():
     res["type_I_error_controlled"] = bool(rej_null_05 <= 0.10)
     res["has_power"] = bool(rej_alt > 0.5)
     ok = res["type_I_error_controlled"] and res["has_power"]
-    res["VERDICT"] = "VERIFIED" if ok else "FAIL"
-    rep["claims"]["C6_type1_error"] = res
+    res["finite_proxy_passed"] = bool(ok)
+    res["paper_claim_verified"] = False
+    res["status"] = "FINITE_PERMUTATION_CALIBRATION_PROXY" if ok else "FAIL"
+    res["paper_statement"] = (
+        "Section 4.4's permutation or STEAgg test controls type-I error "
+        "and has useful power."
+    )
+    res["production_path"] = [
+        "repro/src/core.py",
+        "repro/src/verify.py",
+        "outputs/verdict.json",
+    ]
+    res["limitations"] = [
+        "This is a small raw-statistic permutation test, not the paper's debiased STE or STEAgg procedure.",
+        "The finite rejection estimate is calibration evidence only.",
+    ]
+    rep["claims"]["C6"] = res
     return ok
 
 
 def claim_C2C3():
-    """Lemma 3.1 / Theorem 3.2: first/second-order differentiability.  Verified via their
-    statistical consequences -- C5's sqrt(n)-normality under the alternative requires
-    first-order pathwise differentiability, and C4's degeneracy under the null requires the
-    second-order structure."""
-    res = {}
-    res["note"] = ("Differentiability confirmed indirectly: the C5 sqrt(n)-asymptotic-normality "
-                   "under the alternative is the statistical signature of first-order differentiability "
-                   "(Lemma 3.1), and the C4 degenerate weighted-chi^2 null is the signature of the "
-                   "second-order structure (Theorem 3.2).")
-    c4 = rep["claims"].get("C4_degenerate_null", {}).get("VERDICT") == "VERIFIED"
-    c5 = rep["claims"].get("C5_normal_under_alt", {}).get("VERDICT") == "VERIFIED"
-    res["first_order_diff_via_C5"] = bool(c5)
-    res["second_order_diff_via_C4"] = bool(c4)
-    ok = bool(c4 and c5)
-    res["VERDICT"] = "VERIFIED" if ok else "FAIL"
-    rep["claims"]["C2C3_differentiability"] = res
-    return ok
+    """Record that the differentiability claims are not reproduced directly."""
+    c4 = rep["claims"].get("C4", {}).get("finite_proxy_passed", False)
+    c5 = rep["claims"].get("C5", {}).get("finite_proxy_passed", False)
+    common = {
+        "finite_proxy_passed": False,
+        "paper_claim_verified": False,
+        "status": "NOT_REPRODUCED",
+        "indirect_consequence_proxies": {
+            "C2_from_C5": bool(c5),
+            "C3_from_C4": bool(c4),
+        },
+        "production_path": [
+            "repro/src/verify.py",
+            "outputs/verdict.json",
+        ],
+        "limitations": [
+            "No direct first- or second-order pathwise derivative or efficient influence function is implemented.",
+            "Finite distributional behavior cannot establish a functional-analytic theorem.",
+        ],
+    }
+    rep["claims"]["C2"] = dict(
+        common,
+        paper_statement="Lemma 3.1: first-order pathwise differentiability and EIF.",
+    )
+    rep["claims"]["C3"] = dict(
+        common,
+        paper_statement="Theorem 3.2: second-order pathwise differentiability under the null.",
+    )
+    return False
 
 
 if __name__ == "__main__":
@@ -183,9 +255,39 @@ if __name__ == "__main__":
     print(f"C1 STE definition:        {r1}")
     print(f"C4 degenerate null:       {r4}")
     print(f"C5 normal under alt:      {r5}")
-    print(f"C6 type I error:          {r6}  (null rej={rep['claims']['C6_type1_error']['null_rejection_alpha05']})")
-    print(f"C2/C3 differentiability:  {r23}  (via consequence)")
+    print(f"C6 type I error:          {r6}  (null rej={rep['claims']['C6']['null_rejection_alpha05']})")
+    print(f"C2/C3 differentiability:  {r23}  (not reproduced directly)")
+    finite_proxy_count = sum(
+        1 for claim in rep["claims"].values() if claim.get("finite_proxy_passed")
+    )
+    rep.update(
+        {
+            "paper": "HdhEFfEsoz",
+            "title": "Sinkhorn Treatment Effects: A Causal Optimal Transport Measure",
+            "authors": ["Medha Agarwal", "Alex Luedtke"],
+            "arxiv": "2605.08485",
+            "scope": "Independent audit of finite Sinkhorn-divergence and permutation proxies; the paper's functional derivatives, debiased estimators, STEAgg procedure, and image experiments are outside this repository.",
+            "overall_status": "INCONCLUSIVE",
+            "finite_proxy_diagnostics_passed": finite_proxy_count,
+            "finite_proxy_diagnostics_total": 4,
+            "paper_claims_verified": 0,
+            "paper_claims_total": 6,
+            "full_paper_reproduction": False,
+            "not_reproduced": [
+                "C2 direct first-order pathwise differentiability and EIF",
+                "C3 direct second-order pathwise differentiability and second-order EIF",
+                "one-step and cross-fitted nuisance estimators",
+                "STEAgg over a regularization grid",
+                "Gaussian simulation protocol from the paper",
+                "PatchCamelyon image experiments",
+                "GPU, runtime, and memory experiments",
+            ],
+            "notes": [
+                "The four finite diagnostics are retained as bounded proxies only.",
+                "The old 5/6 VERIFIED label counted indirect consequences as theorem verification and is superseded by this conservative verdict.",
+            ],
+        }
+    )
     json.dump(rep, open(os.path.join(OUT, "verdict.json"), "w"), indent=2, default=_dump)
-    n = sum(1 for c in rep["claims"].values() if c["VERDICT"] == "VERIFIED")
-    print(f"\nVERIFIED {n}/5 checked claim-groups (C1, C2/C3, C4, C5, C6)")
+    print(f"\nFINITE PROXIES {finite_proxy_count}/4 passed (C1, C4, C5, C6)")
     print("Saved outputs/verdict.json")

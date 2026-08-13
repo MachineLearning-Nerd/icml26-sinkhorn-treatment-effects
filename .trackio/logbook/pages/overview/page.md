@@ -1,16 +1,21 @@
 # overview
 
+## Executive summary
 
----
-<!-- trackio-cell
-{"type": "markdown", "id": "cell_5c0b2c5fd311", "created_at": "2026-07-22T15:51:45+00:00", "title": "Executive summary"}
--->
-# Sinkhorn Treatment Effects — 5/6 VERIFIED (10 pts)
+**Overall status: INCONCLUSIVE**
 
-**STE** = Sinkhorn divergence S(P1,P0) (Eq 1); captures distributional treatment effects via entropic OT.
+The bounded audit passes 4/4 finite diagnostics, but independently verifies
+0/6 paper-level claims. The old 5/6 VERIFIED label is superseded because the
+finite consequences did not implement the paper's functional derivatives,
+debiased estimators, or STEAgg procedure.
 
-- **C1** divergence: ≥0, =0 iff P1=P0, symmetric, →MMD as ε→∞.
-- **C4** degenerate null (sub-√n, right-skewed weighted-χ²).
-- **C5** √n-asymptotically-normal under the alternative (skew/kurt→0).
-- **C6** permutation test type-I error 0.025≤0.05, power 0.95.
-- **C2/C3** differentiability verified via its statistical consequences.
+| Claim group | Evidence status |
+| --- | --- |
+| C1 definition and finite properties | FINITE_DEFINITION_PROXY |
+| C2 first-order differentiability and EIF | NOT_REPRODUCED |
+| C3 second-order differentiability under the null | NOT_REPRODUCED |
+| C4 null scaling | FINITE_NULL_SCALING_PROXY |
+| C5 alternative behavior | FINITE_ALTERNATIVE_NORMALITY_PROXY |
+| C6 permutation behavior | FINITE_PERMUTATION_CALIBRATION_PROXY |
+
+See the repository README and outputs/verdict.json for the full ledger.

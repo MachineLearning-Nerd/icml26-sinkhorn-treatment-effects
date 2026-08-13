@@ -1,25 +1,31 @@
-# HdhEFfEsoz — Sinkhorn Treatment Effects (arXiv 2605.08485)
+# Sinkhorn Treatment Effects — audit status
 
-**Result: 5/6 claim-groups VERIFIED = 10 pts (FULL_GATE_READY)**
+Paper: Sinkhorn Treatment Effects: A Causal Optimal Transport Measure
+Authors: Medha Agarwal and Alex Luedtke
+Reference: arXiv:2605.08485
 
-| Claim | Status | Evidence |
-|---|---|---|
-| **C1** STE definition (Eq 1) | ✅ | Sinkhorn divergence S(P1,P0); ≥0, =0 iff P1=P0, symmetric, grows with divergence, decreases with ε (→MMD). |
-| **C2** Lemma 3.1 (1st-order diff) | ✅ via consequence | C5's √n-normality under alt requires 1st-order pathwise differentiability + EIF. |
-| **C3** Theorem 3.2 (2nd-order, null) | ✅ via consequence | C4's degenerate weighted-χ² null is the 2nd-order IF signature. |
-| **C4** Theorem 4.1 (degenerate null) | ✅ | sub-√n (sqrtn·mean 1.33→0.83), right-skewed (~1.0). |
-| **C5** Eq 12 (normal under alt) | ✅ | √n-consistent (sqrtn·std~1.4), skew 0.76→0.25, excess-kurt→0. |
-| **C6** Sec 4.4 (type I error) | ✅ | permutation test null rejection 0.025≤0.05, power 0.95. |
+## Conservative result
 
-## Method
-STE = Sinkhorn divergence between counterfactual outcome distributions, computed via entropic OT (Sinkhorn). Pure numpy/scipy. The null-vs-alternative distinction (degenerate weighted-χ² under null vs √n-normal under alt) is the paper's key statistical contribution, verified via Monte-Carlo.
+**Overall: INCONCLUSIVE**
 
-## Files
-- `repro/src/core.py` — entropic OT (direct Sinkhorn), sinkhorn_divergence, STE, Gibbs-kernel MMD, null spectrum.
-- `repro/src/verify.py` — C1–C6 verification → `outputs/verdict.json`.
+- Finite diagnostics passed: 4/4 (C1 and C4–C6).
+- Paper-level claims independently verified: 0/6.
+- Full paper reproduction: no.
 
-## Honest notes
-- C2/C3 verified INDIRECTLY via statistical consequences (not direct functional-derivative computation).
-- C4's exact n-rate is approximate at finite n; degeneracy (sub-√n) + right-skew robustly verified.
+The previous 5/6 VERIFIED label counted indirect finite behavior as
+verification of functional-analytic theorems. It is superseded by the
+claim-level record in outputs/verdict.json.
 
-**FULL_GATE_READY: HdhEFfEsoz**
+| Claim | Current status |
+| --- | --- |
+| C1 definition and finite properties | FINITE_DEFINITION_PROXY |
+| C2 first-order differentiability and EIF | NOT_REPRODUCED |
+| C3 second-order differentiability under the null | NOT_REPRODUCED |
+| C4 null scaling behavior | FINITE_NULL_SCALING_PROXY |
+| C5 alternative normality behavior | FINITE_ALTERNATIVE_NORMALITY_PROXY |
+| C6 permutation calibration and power | FINITE_PERMUTATION_CALIBRATION_PROXY |
+
+Run repro/src/verify.py for the bounded diagnostics and
+repro/src/finalize_gate.py for the publication gate. The missing one-step
+estimators, EIFs, STEAgg grid, and image experiments are documented in the
+README and canonical verdict.

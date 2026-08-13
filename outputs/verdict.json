@@ -1,6 +1,6 @@
 {
   "claims": {
-    "C1_ste_definition": {
+    "C1": {
       "STE_self": 0.0,
       "STE_diff": 0.5551,
       "definite": true,
@@ -11,9 +11,21 @@
       "STE_eps0.1": 0.5793,
       "STE_decreases_with_eps": true,
       "STE_grows_with_divergence": true,
-      "VERDICT": "VERIFIED"
+      "finite_proxy_passed": true,
+      "paper_claim_verified": false,
+      "status": "FINITE_DEFINITION_PROXY",
+      "paper_statement": "Equation 1 defines a nonnegative, definite, symmetric Sinkhorn divergence with the stated smoothing behavior.",
+      "production_path": [
+        "repro/src/core.py",
+        "repro/src/verify.py",
+        "outputs/verdict.json"
+      ],
+      "limitations": [
+        "Finite point clouds do not establish the general divergence theorem.",
+        "The large-epsilon calculation is recorded but does not establish the paper's MMD limit."
+      ]
     },
-    "C4_degenerate_null": {
+    "C4": {
       "null_stats_by_n": [
         {
           "n": 30,
@@ -39,9 +51,21 @@
       ],
       "degenerate_faster_than_sqrtn": true,
       "right_skewed_weighted_chi2": true,
-      "VERDICT": "VERIFIED"
+      "finite_proxy_passed": true,
+      "paper_claim_verified": false,
+      "status": "FINITE_NULL_SCALING_PROXY",
+      "paper_statement": "Theorem 4.1 gives the degenerate weighted-chi-square null behavior for the paper's estimator.",
+      "production_path": [
+        "repro/src/core.py",
+        "repro/src/verify.py",
+        "outputs/verdict.json"
+      ],
+      "limitations": [
+        "The raw empirical Sinkhorn divergence is not the paper's debiased plug-in estimator.",
+        "Three finite sample sizes cannot prove the null theorem or weighted-chi-square limit."
+      ]
     },
-    "C5_normal_under_alt": {
+    "C5": {
       "alt_stats_by_n": [
         {
           "n": 30,
@@ -70,20 +94,101 @@
       ],
       "sqrtn_consistent": true,
       "asymptotically_normal": true,
-      "VERDICT": "VERIFIED"
+      "finite_proxy_passed": true,
+      "paper_claim_verified": false,
+      "status": "FINITE_ALTERNATIVE_NORMALITY_PROXY",
+      "paper_statement": "Equation 12 gives square-root-n consistency and asymptotic normality under the alternative for the paper's estimator.",
+      "production_path": [
+        "repro/src/core.py",
+        "repro/src/verify.py",
+        "outputs/verdict.json"
+      ],
+      "limitations": [
+        "The raw two-sample Sinkhorn divergence is not the paper's one-step estimator.",
+        "No nuisance estimation, EIF, sample splitting, or asymptotic theorem is implemented."
+      ]
     },
-    "C6_type1_error": {
+    "C6": {
       "null_rejection_alpha05": 0.025,
       "alternative_rejection": 0.887,
       "type_I_error_controlled": true,
       "has_power": true,
-      "VERDICT": "VERIFIED"
+      "finite_proxy_passed": true,
+      "paper_claim_verified": false,
+      "status": "FINITE_PERMUTATION_CALIBRATION_PROXY",
+      "paper_statement": "Section 4.4's permutation or STEAgg test controls type-I error and has useful power.",
+      "production_path": [
+        "repro/src/core.py",
+        "repro/src/verify.py",
+        "outputs/verdict.json"
+      ],
+      "limitations": [
+        "This is a small raw-statistic permutation test, not the paper's debiased STE or STEAgg procedure.",
+        "The finite rejection estimate is calibration evidence only."
+      ]
     },
-    "C2C3_differentiability": {
-      "note": "Differentiability confirmed indirectly: the C5 sqrt(n)-asymptotic-normality under the alternative is the statistical signature of first-order differentiability (Lemma 3.1), and the C4 degenerate weighted-chi^2 null is the signature of the second-order structure (Theorem 3.2).",
-      "first_order_diff_via_C5": true,
-      "second_order_diff_via_C4": true,
-      "VERDICT": "VERIFIED"
+    "C2": {
+      "finite_proxy_passed": false,
+      "paper_claim_verified": false,
+      "status": "NOT_REPRODUCED",
+      "indirect_consequence_proxies": {
+        "C2_from_C5": true,
+        "C3_from_C4": true
+      },
+      "production_path": [
+        "repro/src/verify.py",
+        "outputs/verdict.json"
+      ],
+      "limitations": [
+        "No direct first- or second-order pathwise derivative or efficient influence function is implemented.",
+        "Finite distributional behavior cannot establish a functional-analytic theorem."
+      ],
+      "paper_statement": "Lemma 3.1: first-order pathwise differentiability and EIF."
+    },
+    "C3": {
+      "finite_proxy_passed": false,
+      "paper_claim_verified": false,
+      "status": "NOT_REPRODUCED",
+      "indirect_consequence_proxies": {
+        "C2_from_C5": true,
+        "C3_from_C4": true
+      },
+      "production_path": [
+        "repro/src/verify.py",
+        "outputs/verdict.json"
+      ],
+      "limitations": [
+        "No direct first- or second-order pathwise derivative or efficient influence function is implemented.",
+        "Finite distributional behavior cannot establish a functional-analytic theorem."
+      ],
+      "paper_statement": "Theorem 3.2: second-order pathwise differentiability under the null."
     }
-  }
+  },
+  "paper": "HdhEFfEsoz",
+  "title": "Sinkhorn Treatment Effects: A Causal Optimal Transport Measure",
+  "authors": [
+    "Medha Agarwal",
+    "Alex Luedtke"
+  ],
+  "arxiv": "2605.08485",
+  "scope": "Independent audit of finite Sinkhorn-divergence and permutation proxies; the paper's functional derivatives, debiased estimators, STEAgg procedure, and image experiments are outside this repository.",
+  "overall_status": "INCONCLUSIVE",
+  "finite_proxy_diagnostics_passed": 4,
+  "finite_proxy_diagnostics_total": 4,
+  "paper_claims_verified": 0,
+  "paper_claims_total": 6,
+  "full_paper_reproduction": false,
+  "not_reproduced": [
+    "C2 direct first-order pathwise differentiability and EIF",
+    "C3 direct second-order pathwise differentiability and second-order EIF",
+    "one-step and cross-fitted nuisance estimators",
+    "STEAgg over a regularization grid",
+    "Gaussian simulation protocol from the paper",
+    "PatchCamelyon image experiments",
+    "GPU, runtime, and memory experiments"
+  ],
+  "notes": [
+    "The four finite diagnostics are retained as bounded proxies only.",
+    "The old 5/6 VERIFIED label counted indirect consequences as theorem verification and is superseded by this conservative verdict."
+  ]
 }

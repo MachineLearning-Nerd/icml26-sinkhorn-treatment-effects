@@ -1,4 +1,4 @@
-# icml26-repro-HdhEFfEsoz-sinkhorn-treatment-effects
+# ICML 2026 — Sinkhorn Treatment Effects
 
 ## Pages
 
