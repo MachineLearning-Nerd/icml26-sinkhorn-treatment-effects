@@ -1,0 +1,68 @@
+{
+  "paper": {
+    "title": "Sinkhorn Treatment Effects: A Causal Optimal Transport Measure",
+    "authors": [
+      "Medha Agarwal",
+      "Alex Luedtke"
+    ],
+    "arxiv": "2605.08485",
+    "collection_anchor": "HdhEFfEsoz"
+  },
+  "complete_paper_reproduction": false,
+  "claims": [
+    {
+      "id": "C1",
+      "source_key": "C1",
+      "paper_claim": "Equation 1 defines a nonnegative, definite, symmetric Sinkhorn divergence with the stated smoothing behavior.",
+      "status": "FINITE_DEFINITION_PROXY",
+      "paper_claim_verified": false,
+      "producer": "repro/src/core.py; repro/src/verify.py",
+      "evidence": "outputs/verdict.json:claims.C1"
+    },
+    {
+      "id": "C2",
+      "source_key": "C2",
+      "paper_claim": "Lemma 3.1 gives first-order pathwise differentiability and an efficient influence function.",
+      "status": "NOT_REPRODUCED",
+      "paper_claim_verified": false,
+      "producer": "repro/src/verify.py absence record",
+      "evidence": "outputs/verdict.json:claims.C2"
+    },
+    {
+      "id": "C3",
+      "source_key": "C3",
+      "paper_claim": "Theorem 3.2 gives second-order pathwise differentiability under the null.",
+      "status": "NOT_REPRODUCED",
+      "paper_claim_verified": false,
+      "producer": "repro/src/verify.py absence record",
+      "evidence": "outputs/verdict.json:claims.C3"
+    },
+    {
+      "id": "C4",
+      "source_key": "C4",
+      "paper_claim": "Theorem 4.1 gives degenerate weighted-chi-square null behavior for the paper's estimator.",
+      "status": "FINITE_NULL_SCALING_PROXY",
+      "paper_claim_verified": false,
+      "producer": "repro/src/core.py; repro/src/verify.py",
+      "evidence": "outputs/verdict.json:claims.C4"
+    },
+    {
+      "id": "C5",
+      "source_key": "C5",
+      "paper_claim": "Equation 12 gives square-root-n consistency and asymptotic normality under the alternative for the paper's estimator.",
+      "status": "FINITE_ALTERNATIVE_NORMALITY_PROXY",
+      "paper_claim_verified": false,
+      "producer": "repro/src/core.py; repro/src/verify.py",
+      "evidence": "outputs/verdict.json:claims.C5"
+    },
+    {
+      "id": "C6",
+      "source_key": "C6",
+      "paper_claim": "Section 4.4's permutation/STEAgg test controls type-I error and has useful power.",
+      "status": "FINITE_PERMUTATION_CALIBRATION_PROXY",
+      "paper_claim_verified": false,
+      "producer": "repro/src/core.py; repro/src/verify.py",
+      "evidence": "outputs/verdict.json:claims.C6"
+    }
+  ]
+}

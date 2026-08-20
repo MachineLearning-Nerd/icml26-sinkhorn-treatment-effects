@@ -1,31 +1,45 @@
-# Sinkhorn Treatment Effects — audit status
+# Status — icml26-sinkhorn-treatment-effects
 
-Paper: Sinkhorn Treatment Effects: A Causal Optimal Transport Measure
-Authors: Medha Agarwal and Alex Luedtke
-Reference: arXiv:2605.08485
+**Paper:** Sinkhorn Treatment Effects: A Causal Optimal Transport Measure
+**Authors:** Medha Agarwal and Alex Luedtke
+**Reference:** arXiv:2605.08485
+**Collection anchor:** HdhEFfEsoz
 
-## Conservative result
+## Result
 
-**Overall: INCONCLUSIVE**
+**INCONCLUSIVE**
 
-- Finite diagnostics passed: 4/4 (C1 and C4–C6).
-- Paper-level claims independently verified: 0/6.
-- Full paper reproduction: no.
+| Evidence unit | Result |
+|---|---:|
+| Finite deterministic diagnostics | 4/4 passed |
+| Scoped evidence points | 10/12 supported |
+| Paper-level claims independently verified | 0/6 |
+| Complete paper reproduction | false |
+| Publication allowed | false |
 
-The previous 5/6 VERIFIED label counted indirect finite behavior as
-verification of functional-analytic theorems. It is superseded by the
-claim-level record in outputs/verdict.json.
+## Claim statuses
 
-| Claim | Current status |
-| --- | --- |
-| C1 definition and finite properties | FINITE_DEFINITION_PROXY |
+| Claim | Status |
+|---|---|
+| C1 finite definition and properties | FINITE_DEFINITION_PROXY |
 | C2 first-order differentiability and EIF | NOT_REPRODUCED |
-| C3 second-order differentiability under the null | NOT_REPRODUCED |
-| C4 null scaling behavior | FINITE_NULL_SCALING_PROXY |
-| C5 alternative normality behavior | FINITE_ALTERNATIVE_NORMALITY_PROXY |
+| C3 second-order differentiability and EIF | NOT_REPRODUCED |
+| C4 null scaling | FINITE_NULL_SCALING_PROXY |
+| C5 alternative normality | FINITE_ALTERNATIVE_NORMALITY_PROXY |
 | C6 permutation calibration and power | FINITE_PERMUTATION_CALIBRATION_PROXY |
 
-Run repro/src/verify.py for the bounded diagnostics and
-repro/src/finalize_gate.py for the publication gate. The missing one-step
-estimators, EIFs, STEAgg grid, and image experiments are documented in the
-README and canonical verdict.
+C2 and C3 have indirect consequence metadata only; it is not promoted to
+theorem verification.
+
+## Metadata-only checks
+
+~~~bash
+python3 -m py_compile repro/src/finalize_gate.py verify_final.py
+python3 repro/src/finalize_gate.py
+python3 verify_final.py
+~~~
+
+The standardization pass does not run repro/src/verify.py, the finite
+simulation, or any author implementation. The missing one-step estimators,
+EIFs, STEAgg grid, Gaussian protocol, PatchCamelyon experiments, and
+runtime/memory study remain outside the audit.

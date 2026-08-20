@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this audit, please cite the paper and this repository."
+title: "ICML 2026 - Sinkhorn Treatment Effects"
+type: software
+version: "1.0.0"
+authors:
+  - family-names: Agarwal
+    given-names: Medha
+  - family-names: Luedtke
+    given-names: Alex
+repository-code: "https://github.com/MachineLearning-Nerd/icml26-sinkhorn-treatment-effects"
+url: "https://arxiv.org/abs/2605.08485"
+abstract: "An independent, bounded evidence audit of finite Sinkhorn treatment-effect proxies."
+keywords:
+  - causal inference
+  - optimal transport
+  - Sinkhorn divergence
+  - reproducibility
+identifiers:
+  - type: doi
+    value: "10.48550/arXiv.2605.08485"
+    description: "Paper DOI"
+preferred-citation:
+  type: article
+  title: "Sinkhorn Treatment Effects: A Causal Optimal Transport Measure"
+  authors:
+    - family-names: Agarwal
+      given-names: Medha
+    - family-names: Luedtke
+      given-names: Alex
+  year: 2026
+  journal: "arXiv preprint arXiv:2605.08485"

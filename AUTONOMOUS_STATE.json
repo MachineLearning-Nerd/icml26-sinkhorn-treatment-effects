@@ -1,0 +1,23 @@
+{
+  "repository": "icml26-sinkhorn-treatment-effects",
+  "legacy_repository": "icml26-repro-HdhEFfEsoz-sinkhorn-treatment-effects",
+  "paper": "2605.08485",
+  "collection_anchor": "HdhEFfEsoz",
+  "mode": "documentation_only",
+  "historical_scientific_evidence_preserved": true,
+  "scientific_runner_executed_by_standardization_pass": false,
+  "author_implementation_executed_by_standardization_pass": false,
+  "overall_status": "INCONCLUSIVE",
+  "finite_proxy_diagnostics_passed": 4,
+  "finite_proxy_diagnostics_total": 4,
+  "claims_total": 6,
+  "claims_verified": 0,
+  "evidence_points_supported": 10,
+  "evidence_points_total": 12,
+  "complete_paper_reproduction": false,
+  "current_score_claim": false,
+  "publication_allowed": false,
+  "canonical_branch": "main",
+  "published_branch_count": 1,
+  "canonical_identity": "MachineLearning-Nerd <MachineLearning-Nerd@users.noreply.github.com>"
+}

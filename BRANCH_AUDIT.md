@@ -1,43 +1,32 @@
-# Branch and attribution audit
+# Branch and attribution audit — HdhEFfEsoz
 
-## Historical state
-
-Before normalization, the repository was:
-
-- Name: icml26-repro-HdhEFfEsoz-sinkhorn-treatment-effects
-- Remote: MachineLearning-Nerd/icml26-repro-HdhEFfEsoz-sinkhorn-treatment-effects
-- Default branch: master
-- Historical master tip: db5b7a0e1a8c2bb1eacb1f1f3bf261fa5840441a
-- Branches observed: master only
-
-The historical commit used DineshAI / dinesh@local and included a Claude
-co-author trailer. That attribution is not retained in the normalized
-published history.
-
-## Canonical state
+## Canonical target
 
 - Repository: MachineLearning-Nerd/icml26-sinkhorn-treatment-effects
+- Former local/repository name: icml26-repro-HdhEFfEsoz-sinkhorn-treatment-effects
 - Canonical branch: main
-- Legacy master branch: removed after main was published
-- Expected branch count: one
+- Published branches: main only
+- Collection anchor: HdhEFfEsoz
 
-All reachable published commits are normalized to:
+Before normalization, the repository used master as its default and contained
+two historical commits. The source tip before this documentation pass was
+fc288de69d46378409257efe27ae46a8dc93bd0a. A recovery bundle was created at
+/tmp/icml26-sinkhorn-treatment-before-history.wyzMQz/icml26-sinkhorn-treatment-before-history.bundle
+with SHA-256
+7561fb8726d5600197dd1441902af50d441e13dd111ed0a432b66e877b0f1142.
+
+## History policy
+
+The old DineshAI/local attribution and Claude co-author trailer are not
+retained in the published reachable history. All commits use:
 
 ~~~text
-MachineLearning-Nerd
-37579156+MachineLearning-Nerd@users.noreply.github.com
+MachineLearning-Nerd <MachineLearning-Nerd@users.noreply.github.com>
 ~~~
 
-No Claude co-author trailer is permitted in the canonical history.
+## Verification contract
 
-## Verification checklist
-
-The final publication check must confirm:
-
-1. GitHub metadata uses the canonical repository name and main as default.
-2. The only remote branch is main.
-3. The main tip contains README.md, STATUS.md, GATE_READY.md,
-   BRANCH_AUDIT.md, the canonical verdict, and the publication gate.
-4. Paginated commit attribution reports MachineLearning-Nerd for every
-   reachable commit.
-5. No reachable commit contains the old Claude co-author trailer.
+verify_final.py must confirm that main is the sole local and remote branch,
+that the standardized documentation package is present, that the four finite
+proxy count and six-claim boundary are consistent, and that every reachable
+commit uses the canonical identity.

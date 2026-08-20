@@ -1,0 +1,79 @@
+{
+  "scope": "bounded_finite_proxy_audit_with_explicit_missing_paper_paths",
+  "evidence_points_supported": 10,
+  "evidence_points_total": 12,
+  "points": [
+    {
+      "id": "E1",
+      "status": "SUPPORTED",
+      "description": "Paper title, authors, arXiv identifier, and collection anchor are pinned.",
+      "source": "outputs/verdict.json"
+    },
+    {
+      "id": "E2",
+      "status": "SUPPORTED",
+      "description": "The referenced paper snapshot is present in the repository.",
+      "source": "docs/paper.txt and docs/paper.html"
+    },
+    {
+      "id": "E3",
+      "status": "SUPPORTED",
+      "description": "The repository scope and version boundary are documented.",
+      "source": "README.md and SOURCE_AUDIT.md"
+    },
+    {
+      "id": "E4",
+      "status": "SUPPORTED",
+      "description": "The finite definition proxy is recorded with its producer path and limitations.",
+      "source": "outputs/verdict.json:claims.C1"
+    },
+    {
+      "id": "E5",
+      "status": "SUPPORTED",
+      "description": "The absence of a direct first-order derivative and EIF path is explicitly recorded.",
+      "source": "outputs/verdict.json:claims.C2 and CLAIM_EVIDENCE.md"
+    },
+    {
+      "id": "E6",
+      "status": "SUPPORTED",
+      "description": "The absence of a direct second-order derivative and null EIF path is explicitly recorded.",
+      "source": "outputs/verdict.json:claims.C3 and CLAIM_EVIDENCE.md"
+    },
+    {
+      "id": "E7",
+      "status": "SUPPORTED",
+      "description": "The finite null-scaling proxy is recorded with its producer path and limitations.",
+      "source": "outputs/verdict.json:claims.C4"
+    },
+    {
+      "id": "E8",
+      "status": "SUPPORTED",
+      "description": "The finite alternative-normality proxy is recorded with its producer path and limitations.",
+      "source": "outputs/verdict.json:claims.C5"
+    },
+    {
+      "id": "E9",
+      "status": "SUPPORTED",
+      "description": "The finite permutation-calibration proxy is recorded with its producer path and limitations.",
+      "source": "outputs/verdict.json:claims.C6"
+    },
+    {
+      "id": "E10",
+      "status": "SUPPORTED",
+      "description": "The conservative verdict and structural publication gate are checked for consistency.",
+      "source": "outputs/verdict.json, outputs/gate.json, and publication_gate.json"
+    },
+    {
+      "id": "E11",
+      "status": "NOT_AVAILABLE",
+      "description": "A direct implementation of the paper's EIF, one-step, and cross-fitted nuisance paths is not available.",
+      "source": "ENVIRONMENT.md and outputs/verdict.json"
+    },
+    {
+      "id": "E12",
+      "status": "NOT_AVAILABLE",
+      "description": "The paper-scale Gaussian, PatchCamelyon, runtime, and memory experiments are not available.",
+      "source": "ENVIRONMENT.md and outputs/verdict.json"
+    }
+  ]
+}

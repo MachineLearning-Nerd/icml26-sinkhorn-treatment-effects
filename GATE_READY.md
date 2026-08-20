@@ -1,33 +1,18 @@
-# Publication gate
+# Gate readiness — Sinkhorn treatment-effects audit
 
-This repository is publication-ready as an **honest finite-proxy audit**.
-It is not marked as a full reproduction of the paper.
+This repository is ready only for a conservative, documentation-level gate.
 
-## Gate decision
+## Required conditions
 
-- Overall status: INCONCLUSIVE
-- Finite diagnostics: 4/4 pass
-- Paper claims independently verified: 0/6
-- Full paper reproduction: false
-- Gate: PASS for the stated audit scope
+- outputs/verdict.json contains C1 through C6 with the expected statuses.
+- C1 and C4–C6 remain finite proxies; C2 and C3 remain NOT_REPRODUCED.
+- Four of four finite diagnostics and zero of six paper claims are recorded.
+- The scoped evidence manifest records 10/12 supported points.
+- overall_status remains INCONCLUSIVE.
+- full_paper_reproduction is false.
+- current_score_claim is false and publication_allowed is false.
+- verify_final.py passes locally and in a fresh clone.
 
-The gate passes only when the canonical verdict contains all six claims with
-the expected conservative statuses:
-
-- C1 FINITE_DEFINITION_PROXY
-- C2 NOT_REPRODUCED
-- C3 NOT_REPRODUCED
-- C4 FINITE_NULL_SCALING_PROXY
-- C5 FINITE_ALTERNATIVE_NORMALITY_PROXY
-- C6 FINITE_PERMUTATION_CALIBRATION_PROXY
-
-Run:
-
-~~~bash
-python3 repro/src/finalize_gate.py
-~~~
-
-The script validates outputs/verdict.json and writes
-outputs/gate.json and publication_gate.json. A passing gate means the
-documentation, evidence labels, and publication metadata agree; it does not
-turn finite proxies into theorem verification.
+publication_gate_passed means that the metadata and evidence boundary are
+internally consistent. It does not mean that the paper's asymptotic claims or
+experiments were reproduced.
